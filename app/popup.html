@@ -17,8 +17,6 @@
 	<a class="settings" href="#" data-jq-dropdown="#jq-dropdown-1" data-horizontal-offset="10"><i id="settingDropdown" class="fa fa-cog"></i></a>
 	<div id="jq-dropdown-1" class="jq-dropdown jq-dropdown-tip jq-dropdown-anchor-right">
 		<ul class="jq-dropdown-menu">
-			<!-- <li><a href="#1">Settings</a></li>
-			<li><a href="#2">Support</a></li> -->
 			<li><a id="zipcodeLink" href="#">Set Location</a></li>
 			<li><a id="tempScale" href="#">Use Celsius</a></li>
 			<li class="jq-dropdown-divider"></li>
@@ -30,7 +28,8 @@
 	</div>
 	<div class="current">
 		<div class="left">
-			<div class="location"><i class="fa fa-refresh fa-spin"></i></div><input placeholder="Enter address or zipcode" type="text" class="zipcode hidden"></input>
+			<div class="location"><i class="fa fa-refresh fa-spin"></i></div>
+			<input placeholder="Enter address or zipcode" type="text" class="zipcode hidden"></input>
 			<div class="summary">--</div>
 		</div>
 		<div class="right">
@@ -39,16 +38,6 @@
 		</div>
 	</div>
 	<div style="clear: both"></div>
-	<!-- <div class="currentOther">
-		<div class="left">
-			<span class="icon-windy2"></span>
-			<span class="wind">6 mph NE</span>
-		</div>
-		<div class="right">
-			<span class="icon-rainy2"></span>
-			<span title="Chance of Rain" class="rainChance">--</span>
-		</div>
-	</div> -->
 	<p id="hourlySummary"></p>
 	<ul class="hourly">
 		<li id="hour1">
@@ -138,7 +127,6 @@
 			<div title="Chance of Rain" class="rainChance">--</div>
 		</li>
 	</ul>
-
 
 	<script type="text/javascript" src="vendor/js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="vendor/js/moment.min.js"></script>

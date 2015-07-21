@@ -7,19 +7,18 @@ body {
 li {
     list-style: none;
 }
-
 a {
     text-decoration: none;
     color: #4681c3;
     outline: none;
 }
-.hidden{
+.hidden {
     display: none;
 }
-.zipcode{
+.zipcode {
     width: 300px;
 }
-.forecast .day{
+.forecast .day {
     border-top: 1px dashed #888888;
 }
 .forecast .day {
@@ -42,7 +41,7 @@ a {
     color: #4681c3;
     margin: 5px 0;
 }
-.day .wi{
+.day .wi {
     margin: 10px 0;
     font-size: 30px;
 }
@@ -50,7 +49,7 @@ a {
     margin: 10px;
     /*border-bottom: 1px solid #DCDCDC;*/
 }
-.current .currentIcon{
+.current .currentIcon {
     font-size: 40px;
 }
 .current .location {
@@ -80,21 +79,18 @@ a {
 .currentOther .wind, .currentOther .rainChance {
     margin-left: -15px;
 }
-
-.titleBar{
+.titleBar {
     background-color: #ecf0f1;
     padding: 10px 0;
     font-weight: 600;
     border-bottom: 1px solid #7f8c8d;
     text-align: center;
 }
-
-.settings{
+.settings {
     position: fixed;
     top: 10px;
     right: 14px;
 }
-
 .hourly li {
     background: #333;
     color: #fff;
@@ -111,13 +107,11 @@ a {
     color: #4681c3;
     margin: 5px 0;
 }
-
-.hourly .wi{
+.hourly .wi {
     margin: 10px 0;
     font-size: 20px;
 }
-
-#hourlySummary{
+#hourlySummary {
     font-size: 10px;
     margin: 10px;
 }

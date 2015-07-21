@@ -43,11 +43,11 @@ var getLocationFromZipcode = function(zipcode) {
     var locationUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address=postal_code:' + zipcode;
     $.get(locationUrl, function(data) {
         var coords = {};
-        if(data.status != 'ZERO_RESULTS'){
+        if (data.status != 'ZERO_RESULTS') {
             coords.latitude = data.results[0].geometry.location.lat;
             coords.longitude = data.results[0].geometry.location.lng;
             processCoordinates(coords);
-        }else{
+        } else {
             clearLocationData();
             $('.zipcode').val('Location not found!');
             getLocation();
@@ -66,6 +66,8 @@ var getCityState = function(coords) {
     var locationUrl = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=true&latlng=' + coords.latitude + ',' + coords.longitude;
     $.get(locationUrl, function(data) {
         var state, city;
+
+        //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
         //http://www.raymondcamden.com/2013/03/05/Simple-Reverse-Geocoding-Example
         var result = data.results[0];
         for (var i = 0, len = result.address_components.length; i < len; i++) {
@@ -73,26 +75,6 @@ var getCityState = function(coords) {
             if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
             if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
         }
-        //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
-        //var results = data.results;
-        // for (var i=0; i<results[0].address_components.length; i++) {
-        //     for (var b=0;b<results[0].address_components[i].types.length;b++) {
-        //         if (results[0].address_components[i].types[b] == "locality") {
-        //             city = results[0].address_components[i].short_name;
-        //             break;
-        //         }
-        //     }
-        // }
-        //
-        // for (var i=0; i<results[0].address_components.length; i++) {
-        //     for (var b=0;b<results[0].address_components[i].types.length;b++) {
-        //         if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-        //             state = results[0].address_components[i].short_name;
-        //             break;
-        //         }
-        //     }
-        // }
-
         $('.current .location').text(city + ', ' + state)
     });
 };
@@ -107,7 +89,6 @@ var getForecast = function(coords, fromBackground) {
             displayForcast(data.daily);
             displayCurrent(data.currently);
             displayHourly(data.hourly);
-            //displayCurrentOther(data);
         }
 
         updateBadge(data.currently.temperature);
@@ -116,9 +97,9 @@ var getForecast = function(coords, fromBackground) {
 
 var updateBadge = function(temp) {
     chrome.browserAction.setBadgeText({
-        text: convertTemp(temp).toString()
+        text: convertTemp(temp).toString() //+ '°'
     });
-    //+ '°'
+
 };
 
 var displayForcast = function(daily) {
@@ -160,7 +141,7 @@ var saveZipCode = function(zipcode) {
     getLocation();
 };
 
-var clearLocationData = function(){
+var clearLocationData = function() {
     localStorage.removeItem('zipcode');
     localStorage.removeItem('latitude');
     localStorage.removeItem('longitude');
@@ -177,26 +158,12 @@ var bindActions = function() {
     });
 
     $('.zipcode').keydown(function(e) {
-        //Allow backspace and delete keys
-        //if (e.keyCode == 8 || e.keyCode == 46) {
-        //    return true;
-        //}
-        //If enter, then save zipcode and load location
         if (e.keyCode == 13) {
             var zipcode = $(this).val();
-            //var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
-            //if (isValidZip || zipcode == '') {
-                saveZipCode(zipcode);
-                $(this).hide();
-                $('.location').show();
-            //}
+            saveZipCode(zipcode);
+            $(this).hide();
+            $('.location').show();
         }
-
-        //var test = /[0-9]/; //regex
-        //var value = String.fromCharCode(e.keyCode); //get the charcode and convert to char
-        //if (!value.match(test)) {
-            //return false; //dont display key if it is a number
-        //}
     });
 
     $('#zipcodeLink').click(function() {
@@ -216,7 +183,7 @@ var bindActions = function() {
     });
 };
 
-var updateTempScaleText = function(){
+var updateTempScaleText = function() {
     var tempScale = localStorage.getItem('tempScale');
     if (tempScale == 'Celsius') {
         $('#tempScale').text('Use Fahrenheit');
@@ -233,17 +200,6 @@ var convertTemp = function(tempValue) {
 
     return Math.round(tempValue);
 };
-
-// var displayCurrentOther = function(data) {
-//     var bearing = (data.currently.windBearing / 22.5) + .5;
-//     var directions = ["N", "NE", "NE", "NE", "E", "SE", "SE", "SE", "S", "SW", "SW", "SW", "W", "NW", "NW", "NW"]
-//     var windDirection = directions[Math.round(bearing % 16)];
-//     var currentOther = $('.currentOther');
-//     currentOther.find('.wind').html(Math.round(data.currently.windSpeed) + 'mph ' + windDirection);
-//
-//
-//     currentOther.find('.rainChance').text((data.currently.precipProbability * 100) + '%');
-// };
 
 window.onload = function() {
     _gaq.push(['_trackEvent', 'Extension Opened', 'clicked']);
