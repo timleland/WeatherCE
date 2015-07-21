@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link href="vendor/css/reset.css" rel="stylesheet" />
+	<link href="vendor/css/weather-icons.min.css" rel="stylesheet" />
+	<link href="vendor/css/dropdown.min.css" rel="stylesheet" />
+	<link href="vendor/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="css/popup.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="titleBar">
+		<h2>Weather</h2>
+	</div>
+
+	<a class="settings" href="#" data-jq-dropdown="#jq-dropdown-1" data-horizontal-offset="10"><i id="settingDropdown" class="fa fa-cog"></i></a>
+	<div id="jq-dropdown-1" class="jq-dropdown jq-dropdown-tip jq-dropdown-anchor-right">
+		<ul class="jq-dropdown-menu">
+			<!-- <li><a href="#1">Settings</a></li>
+			<li><a href="#2">Support</a></li> -->
+			<li><a id="zipcodeLink" href="#">Set Location</a></li>
+			<li><a id="tempScale" href="#">Use Celsius</a></li>
+			<li class="jq-dropdown-divider"></li>
+			<li><a id="donateLink" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G3ZAESS76EA7L">Buy me a Coffee</a></li>
+			<li><a id="reviewLink" target="_blank" href="https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb/reviews">Rate & Review</a></li>
+			<li><a id="blogLink" target="_blank" href="http://timleland.com">Blog</a></li>
+			<li><a id="forecastioLink" target="_blank" href="http://forecast.io/">Forecast.io</a></li>
+		</ul>
+	</div>
+	<div class="current">
+		<div class="left">
+			<div class="location"><i class="fa fa-refresh fa-spin"></i></div><input placeholder="Enter address or zipcode" type="text" class="zipcode hidden"></input>
+			<div class="summary">--</div>
+		</div>
+		<div class="right">
+			<span class="currentIcon"></span>
+			<span class="temperature">--</span>
+		</div>
+	</div>
+	<div style="clear: both"></div>
+	<!-- <div class="currentOther">
+		<div class="left">
+			<span class="icon-windy2"></span>
+			<span class="wind">6 mph NE</span>
+		</div>
+		<div class="right">
+			<span class="icon-rainy2"></span>
+			<span title="Chance of Rain" class="rainChance">--</span>
+		</div>
+	</div> -->
+	<p id="hourlySummary"></p>
+	<ul class="hourly">
+		<li id="hour1">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour2">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour3">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour4">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour5">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour6">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour7">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li id="hour8">
+			<div class="time">--</div>
+			<div class="icon"></div>
+			<span class="temp">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+	</ul>
+
+	<ul class="forecast">
+		<li class="day" id="day1">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li class="day" id="day2">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li class="day" id="day3">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li class="day" id="day4">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+		<li class="day" id="day5">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
+	</ul>
+
+
+	<script type="text/javascript" src="vendor/js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="vendor/js/moment.min.js"></script>
+	<script type="text/javascript" src="vendor/js/dropdown.min.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script>
+	<script type="text/javascript" src="js/popup.js"></script>
+</body>
+
+</html>
