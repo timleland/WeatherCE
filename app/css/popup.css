@@ -1,6 +1,6 @@
 body {
     width: 523px;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-weight: 300;
     border-radius: 2px
 }
@@ -111,7 +111,11 @@ a {
     margin: 10px 0;
     font-size: 20px;
 }
-#hourlySummary {
+#hourlySummary, #alerts {
     font-size: 10px;
-    margin: 10px;
+    margin: 5px 0 5px 10px;
+}
+
+#alerts a{
+    color: #c14646;
 }

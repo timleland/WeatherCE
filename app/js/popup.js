@@ -89,6 +89,7 @@ var getForecast = function(coords, fromBackground) {
             displayForcast(data.daily);
             displayCurrent(data.currently);
             displayHourly(data.hourly);
+            displayAlerts(data.alerts);
         }
 
         updateBadge(data.currently.temperature);
@@ -99,7 +100,6 @@ var updateBadge = function(temp) {
     chrome.browserAction.setBadgeText({
         text: convertTemp(temp).toString() //+ '°'
     });
-
 };
 
 var displayForcast = function(daily) {
@@ -129,7 +129,14 @@ var displayCurrent = function(currently) {
     var currentSection = $('.current');
     currentSection.find('.summary').text(currently.summary);
     currentSection.find('.right .currentIcon').html(weatherIcons[currently.icon]);
-    currentSection.find('.temperature').html(convertTemp(currently.temperature) + '&deg;');
+    currentSection.find('.temperature').html(convertTemp(currently.temperature) + '&#176;');
+};
+
+var displayAlerts = function(alerts) {
+    $('#alerts').html('');
+    alerts.forEach(function(alert) {
+        $('#alerts').append('<li><a target="_blank" href="' + alert.uri + '">' + alert.title + '</a></li>')
+    });
 };
 
 var saveZipCode = function(zipcode) {
