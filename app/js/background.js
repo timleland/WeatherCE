@@ -16,4 +16,6 @@ window.onload = function() {
     chrome.alarms.create('updateTemp', {
         periodInMinutes: 60
     });
+
+    installUpdate();
 };

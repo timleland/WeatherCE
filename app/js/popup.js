@@ -128,10 +128,12 @@ var displayForcast = function(daily) {
 
 var displayHourly = function(hourly) {
     $('#hourlySummary').text(hourly.summary);
+    var timeScale = localStorage.getItem('timeScale');
+    var timeFormat = (timeScale == '24h' ? 'HH' : 'hA');
 
     for (i = 1; i <= 8; i++) {
         var hourSection = $('#hour' + i);
-        hourSection.find('.time').text(moment.unix(hourly.data[i].time).format('hA'));
+        hourSection.find('.time').text(moment.unix(hourly.data[i].time).format(timeFormat));
         hourSection.find('.temp').html(convertTemp(hourly.data[i].temperature) + '&#176;');
         hourSection.find('.icon').html(weatherIcons[hourly.data[i].icon]);
         hourSection.find('.rainChance').html(Math.round((hourly.data[i].precipProbability * 100)) + '%');
@@ -199,18 +201,43 @@ var bindActions = function() {
         } else {
             localStorage.setItem('tempScale', 'Celsius');
         }
-        updateTempScaleText();
+        updateSettingsText();
         //Refresh temp
         getLocation();
     });
+
+    $('#timeScale').click(function() {
+        var timeScale = localStorage.getItem('timeScale');
+        if (timeScale == '24h') {
+            localStorage.setItem('timeScale', '12h');
+        } else {
+            localStorage.setItem('timeScale', '24h');
+        }
+        updateSettingsText();
+        //Refresh temp
+        getLocation();
+    });
+
+    $('.summary, .currentIcon, .temperature, .hourly, .forecast').click(function(){
+        var latitude = localStorage.getItem('latitude');
+        var longitude = localStorage.getItem('longitude');
+        window.open('http://forecast.io/#/f/' + latitude + ',' + longitude);
+    });
 };
 
-var updateTempScaleText = function() {
+var updateSettingsText = function() {
     var tempScale = localStorage.getItem('tempScale');
     if (tempScale == 'Celsius') {
         $('#tempScale').text('Use Fahrenheit');
     } else {
         $('#tempScale').text('Use Celsius');
+    }
+
+    var timeScale = localStorage.getItem('timeScale');
+    if (timeScale == '24h') {
+        $('#timeScale').text('Use 12h Time');
+    } else {
+        $('#timeScale').text('Use 24h Time');
     }
 };
 
@@ -223,10 +250,21 @@ var convertTemp = function(tempValue) {
     return Math.round(tempValue);
 };
 
+var installUpdate = function() {
+    chrome.runtime.onInstalled.addListener(function(details) {
+        if (details.reason == "install") {
+             window.open('http://timleland.com/weather-chrome-extension/');
+        } else if (details.reason == "update") {
+            var thisVersion = chrome.runtime.getManifest().version;
+            console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+        }
+    });
+};
+
 window.onload = function() {
     _gaq.push(['_trackEvent', 'Extension Opened', 'clicked']);
 
-    updateTempScaleText();
+    updateSettingsText();
     getLocation();
     bindActions();
 };

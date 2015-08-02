@@ -119,3 +119,6 @@ a {
 #alerts a{
     color: #c14646;
 }
+.pointer{
+    cursor: pointer;
+}

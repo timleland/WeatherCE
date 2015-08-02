@@ -19,6 +19,7 @@
 		<ul class="jq-dropdown-menu">
 			<li><a id="zipcodeLink" href="#">Set Location</a></li>
 			<li><a id="tempScale" href="#">Use Celsius</a></li>
+			<li><a id="timeScale" href="#">Use 24h Time</a></li>
 			<li class="jq-dropdown-divider"></li>
 			<li><a id="donateLink" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G3ZAESS76EA7L">Buy me a Coffee</a></li>
 			<li><a id="reviewLink" target="_blank" href="https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb/reviews">Rate & Review</a></li>
@@ -30,17 +31,17 @@
 		<div class="left">
 			<div class="location"><i class="fa fa-refresh fa-spin"></i></div>
 			<input placeholder="Enter address or zipcode" type="text" class="zipcode hidden"></input>
-			<div class="summary">--</div>
+			<div class="summary pointer">--</div>
 		</div>
 		<div class="right">
-			<span class="currentIcon"></span>
-			<span class="temperature">--</span>
+			<span class="currentIcon pointer"></span>
+			<span class="temperature pointer">--</span>
 		</div>
 	</div>
 	<div style="clear: both"></div>
 	<p id="hourlySummary"></p>
 	<ul id="alerts"></ul>
-	<ul class="hourly">
+	<ul class="hourly pointer">
 		<li id="hour1">
 			<div class="time">--</div>
 			<div class="icon"></div>
@@ -91,7 +92,7 @@
 		</li>
 	</ul>
 
-	<ul class="forecast">
+	<ul class="forecast pointer">
 		<li class="day" id="day1">
 			<div class="dow">--</div>
 			<div class="icon"></div>
