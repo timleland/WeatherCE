@@ -16,6 +16,8 @@ var weatherIcons = {
 
 var apikeys = [];
 
+var getWeatherRetry = 0;
+
 var roundTwoDecimals = function(number) {
     return parseFloat(number).toFixed(2)
 };
@@ -28,11 +30,10 @@ var getLocation = function() {
 
     if (zipcode) {
         getLocationFromZipcode(zipcode);
+    } else if (savedCoords.latitude && savedCoords.longitude) {
+        getForecast(savedCoords, false)
+        getCityState(savedCoords);
     } else {
-        if (savedCoords.latitude && savedCoords.longitude) {
-            getForecast(savedCoords, false)
-            getCityState(savedCoords);
-        }
         navigator.geolocation.getCurrentPosition(function(location) {
             processCoordinates(location.coords);
         });
@@ -58,6 +59,7 @@ var getLocationFromZipcode = function(zipcode) {
 var processCoordinates = function(coords) {
     localStorage.setItem('latitude', coords.latitude);
     localStorage.setItem('longitude', coords.longitude);
+    //Removed to reduce api calls
     getForecast(coords, false);
     getCityState(coords);
 };
@@ -75,7 +77,7 @@ var getCityState = function(coords) {
             if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
             if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
         }
-        $('.current .location').text(city + ', ' + state)
+        $('.current .location').text(city + (state ? ', ' + state : ''))
     });
 };
 
@@ -93,6 +95,17 @@ var getForecast = function(coords, fromBackground) {
         }
 
         updateBadge(data.currently.temperature);
+    }).fail(function() {
+        _gaq.push(['_trackEvent', 'Key Failed', randomApiKey]);
+        if (getWeatherRetry < 3) {
+            getWeatherRetry++;
+            setTimeout(function() {
+                getLocation();
+            }, 1000);
+        } else {
+            _gaq.push(['_trackEvent', 'Failed Multiple Times', 'Last Key: ' + randomApiKey]);
+            alert('Something went wrong. Please try again.')
+        }
     });
 };
 
@@ -133,10 +146,12 @@ var displayCurrent = function(currently) {
 };
 
 var displayAlerts = function(alerts) {
-    $('#alerts').html('');
-    alerts.forEach(function(alert) {
-        $('#alerts').append('<li><a target="_blank" href="' + alert.uri + '">' + alert.title + '</a></li>')
-    });
+    if (alerts) {
+        $('#alerts').html('');
+        alerts.forEach(function(alert) {
+            $('#alerts').append('<li><a target="_blank" href="' + alert.uri + '">' + alert.title + '</a></li>')
+        });
+    }
 };
 
 var saveZipCode = function(zipcode) {

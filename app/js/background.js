@@ -14,6 +14,6 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 window.onload = function() {
     chrome.alarms.clear('updateTemp');
     chrome.alarms.create('updateTemp', {
-        periodInMinutes: 30
+        periodInMinutes: 60
     });
 };
