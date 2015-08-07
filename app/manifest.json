@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "2.5",
+  "version": "2.7",
   "description": "The best weather extension using ForeCast.io API",
   "icons": {
     "48": "img/icon48.png",
@@ -11,7 +11,7 @@
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action" : {
-	"default_icon": "img/icon38.png",
+	"default_icon": "img/badge/wi-day-sunny.png",
     "default_title": "Weather",
     "default_popup": "popup.html"
   },

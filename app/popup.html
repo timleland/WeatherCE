@@ -6,10 +6,11 @@
 	<link href="vendor/css/weather-icons.min.css" rel="stylesheet" />
 	<link href="vendor/css/dropdown.min.css" rel="stylesheet" />
 	<link href="vendor/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="vendor/css/tooltipster.css" rel="stylesheet"/>
 	<link href="css/popup.css" rel="stylesheet" />
 </head>
 
-<body>
+<body id="popup">
 	<div class="titleBar">
 		<h2>Weather</h2>
 	</div>
@@ -31,17 +32,22 @@
 		<div class="left">
 			<div class="location"><i class="fa fa-refresh fa-spin"></i></div>
 			<input placeholder="Enter address or zipcode" type="text" class="zipcode hidden"></input>
-			<div class="summary pointer">--</div>
+			<div class="summary">--</div>
+			<div class="weatherDetail">
+				<p id="hourlySummary"></p>
+				<ul id="alerts"></ul>
+			</div>
 		</div>
 		<div class="right">
 			<span class="currentIcon pointer"></span>
 			<span class="temperature pointer">--</span>
+			<div class="feelsLike pointer"></div>
 		</div>
 	</div>
-	<div style="clear: both"></div>
-	<p id="hourlySummary"></p>
-	<ul id="alerts"></ul>
-	<ul class="hourly pointer">
+
+	<div class="clear"></div>
+
+	<ul class="hourly pointer tooltip">
 		<li id="hour1">
 			<div class="time">--</div>
 			<div class="icon"></div>
@@ -92,7 +98,14 @@
 		</li>
 	</ul>
 
-	<ul class="forecast pointer">
+	<ul class="forecast pointer tooltip">
+		<li class="day" id="day0">
+			<div class="dow">--</div>
+			<div class="icon"></div>
+			<span class="low">--</span> /
+			<span class="high">--</span>
+			<div title="Chance of Rain" class="rainChance">--</div>
+		</li>
 		<li class="day" id="day1">
 			<div class="dow">--</div>
 			<div class="icon"></div>
@@ -133,6 +146,7 @@
 	<script type="text/javascript" src="vendor/js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="vendor/js/moment.min.js"></script>
 	<script type="text/javascript" src="vendor/js/dropdown.min.js"></script>
+	<script type="text/javascript" src="vendor/js/jquery.tooltipster.min.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script>
 	<script type="text/javascript" src="js/popup.js"></script>
 </body>
