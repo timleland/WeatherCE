@@ -98,6 +98,7 @@ var getForecast = function(coords) {
     var weatherUrl = 'https://api.forecast.io/forecast/' + randomApiKey + '/' + coords.latitude + ',' + coords.longitude;
 
     $.get(weatherUrl, function(data) {
+        _gaq.push(['_trackEvent', 'Get Weather', 'auto']);
         console.log(data);
         if ($('#popup').length > 0) {
             $('.tooltip li, .temperature').tooltipster({
@@ -109,8 +110,6 @@ var getForecast = function(coords) {
             displayCurrent(data.currently);
             displayHourly(data.hourly);
             displayAlerts(data.alerts);
-
-
         }
 
         updateBadge(data.currently.temperature, data.currently.icon);
@@ -303,7 +302,7 @@ var installUpdate = function() {
             window.open('http://timleland.com/weather-chrome-extension/');
         } else if (details.reason == "update") {
             getLocation();
-            window.open('http://timleland.com/weather-chrome-extension/#update');
+            //window.open('http://timleland.com/weather-chrome-extension/#update');
             var thisVersion = chrome.runtime.getManifest().version;
             console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
         }
