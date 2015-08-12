@@ -4,6 +4,13 @@ body {
     font-weight: 300;
     border-radius: 2px
 }
+.text-center{
+    text-align: center;
+}
+.upgrade-pro{
+    padding: 5px 0;
+    background-color: #ecf0f1;
+}
 li {
     list-style: none;
 }
