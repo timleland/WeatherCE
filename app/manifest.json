@@ -1,13 +1,13 @@
 {
   "name": "Weather",
-  "version": "2.9",
+  "version": "3.0",
   "description": "The best weather extension using ForeCast.io API",
   "icons": {
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
   "background": {
-    "scripts": ["vendor/js/jquery-2.1.4.min.js", "vendor/js/moment.min.js", "js/popup.js", "js/background.js"]
+    "scripts": ["vendor/js/jquery-2.1.4.min.js", "js/init.js", "js/popup.js", "js/background.js"]
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action" : {
@@ -16,5 +16,5 @@
     "default_popup": "popup.html"
   },
   "manifest_version": 2,
-  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*"]
+  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*", "*://*.weatherapi.app/*", "*://*.timleland.com/*"]
 }
