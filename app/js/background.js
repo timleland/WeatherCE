@@ -3,7 +3,7 @@ APP.BACKGROUND = function() {
     chrome.alarms.onAlarm.addListener(function(alarm) {
         if (alarm.name == 'updateTemp') {
             updateBadgeTemp();
-        };
+        }
     });
 
     var updateBadgeTemp = function() {

@@ -5,10 +5,16 @@ APP.POPUP = function() {
             url: apiurl + 'register',
             type: 'POST',
             data: {
-                app_id: appId
+                temp_scale: localStorage.getItem('tempScale'),
+                time_format: localStorage.getItem('timeScale'),
             },
             success: function(data) {
-                getCurrentLocation();
+                appId = data.app_id;
+                chrome.storage.sync.set({
+                    appId: appId
+                }, function() {
+                    getCurrentLocation();
+                });
             }
         });
     };
@@ -31,8 +37,8 @@ APP.POPUP = function() {
                 if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
                 if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
             }
-             var locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
-             updateCurrentLocation(coords, locationName);
+            var locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
+            updateCurrentLocation(coords, locationName);
         });
     };
 
@@ -64,12 +70,7 @@ APP.POPUP = function() {
             if (appId) {
                 getWeather();
             } else {
-                appId = APP.COMMON.getRandomToken();
-                chrome.storage.sync.set({
-                    appId: appId
-                }, function() {
-                    register();
-                });
+                register();
             }
         });
     };
@@ -90,6 +91,9 @@ APP.POPUP = function() {
     };
 
     window.onload = function() {
+        // $('#weather_embed').load(function() {
+        //     $('.loadingSpinner').fadeOut(1000);
+        // });
         getAppId();
     };
 

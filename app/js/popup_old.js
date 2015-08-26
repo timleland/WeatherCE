@@ -214,7 +214,7 @@ var clearLocationData = function() {
     localStorage.removeItem('zipcode');
     localStorage.removeItem('latitude');
     localStorage.removeItem('longitude');
-    $('.location').html('<i class="fa fa-refresh fa-spin"></i>')
+    $('.location').html('<i class="fa fa-refresh fa-spin"></i>');
 };
 
 var bindActions = function() {
