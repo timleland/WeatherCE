@@ -16,5 +16,5 @@
     "default_popup": "popup.html"
   },
   "manifest_version": 2,
-  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*", "*://*.weatherapi.app/*", "*://*.timleland.com/*"]
+  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*", "*://*.timleland.com/*", "notifications"]
 }

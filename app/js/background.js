@@ -1,32 +1,23 @@
-APP.BACKGROUND = function() {
+APP.background = function() {
 
     chrome.alarms.onAlarm.addListener(function(alarm) {
-        if (alarm.name == 'updateTemp') {
-            updateBadgeTemp();
+        if (alarm.name == 'updateBadge') {
+            APP.popup.getAppId(APP.popup.updateBadge);
         }
     });
 
-    var updateBadgeTemp = function() {
-        var coords = {};
-        coords.latitude = localStorage.getItem('latitude');
-        coords.longitude = localStorage.getItem('longitude');
-        if (coords.latitude && coords.longitude) {
-            getForecast(coords);
-        }
+    window.onload = function() {
+        //Update on load
+        APP.popup.getAppId(APP.popup.updateBadge);
+        chrome.alarms.clear('updateBadge');
+        chrome.alarms.create('updateBadge', {
+            periodInMinutes: 10
+        });
+
+        APP.popup.installUpdate();
     };
 
     return {
         init: function() {},
     };
 }();
-
-window.onload = function() {
-    //Update on load
-    // updateBadgeTemp();
-    // chrome.alarms.clear('updateTemp');
-    // chrome.alarms.create('updateTemp', {
-    //     periodInMinutes: 60
-    // });
-    //
-    // installUpdate();
-};

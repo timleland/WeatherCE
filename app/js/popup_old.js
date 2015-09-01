@@ -43,7 +43,7 @@ var getLocation = function() {
     if (zipcode) {
         getLocationFromZipcode(zipcode);
     } else if (savedCoords.latitude && savedCoords.longitude) {
-        getForecast(savedCoords, false)
+        getForecast(savedCoords, false);
         getCityState(savedCoords);
     } else {
         navigator.geolocation.getCurrentPosition(function(location) {

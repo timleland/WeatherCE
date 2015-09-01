@@ -1,31 +1,36 @@
-APP.POPUP = function() {
-    var appId;
-    var register = function() {
+APP.popup = function() {
+    var _appId;
+    var register = function(coords, locationName) {
         $.ajax({
             url: apiurl + 'register',
             type: 'POST',
             data: {
                 temp_scale: localStorage.getItem('tempScale'),
                 time_format: localStorage.getItem('timeScale'),
+                latitude: coords.latitude,
+                longitude: coords.longitude,
+                type: 'geo',
+                location_name: locationName
             },
             success: function(data) {
-                appId = data.app_id;
+                _appId = data.app_id;
                 chrome.storage.sync.set({
-                    appId: appId
+                    appId: _appId
                 }, function() {
-                    getCurrentLocation();
+                    getWeather();
                 });
             }
         });
     };
 
-    var getCurrentLocation = function() {
+    var getCurrentLocation = function(callBack) {
         navigator.geolocation.getCurrentPosition(function(location) {
-            getCityState(location.coords);
+            debugger
+            getCityState(location.coords, callBack);
         });
     };
 
-    var getCityState = function(coords) {
+    var getCityState = function(coords, callBack) {
         var locationUrl = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=true&latlng=' + coords.latitude + ',' + coords.longitude;
         $.get(locationUrl, function(data) {
             var state, city;
@@ -38,7 +43,31 @@ APP.POPUP = function() {
                 if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
             }
             var locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
-            updateCurrentLocation(coords, locationName);
+            callBack(coords, locationName);
+        });
+    };
+
+    var updateBadge = function(appId) {
+        $.ajax({
+            url: apiurl + 'badge/' + appId,
+            type: 'GET',
+            success: function(data) {
+                chrome.browserAction.setBadgeText({
+                    text: data.temperature //+ '°'
+                });
+                chrome.browserAction.setIcon({
+                    path: 'img/badge/' + data.icon
+                });
+
+                // var options = {
+                //     type: "basic",
+                //     title: "Weather",
+                //     message: "Current temperature " + data.temperature,
+                //     iconUrl: 'img/badge/' + data.icon
+                // };
+                //
+                // chrome.notifications.create('123', options);
+            }
         });
     };
 
@@ -50,31 +79,31 @@ APP.POPUP = function() {
                 latitude: coords.latitude,
                 longitude: coords.longitude,
                 type: 'geo',
-                app_id: appId,
+                app_id: _appId,
                 location_name: locationName
             },
             success: function(data) {
-                getWeather();
+                //Current location should be updated. User will have to refresh to see changes
             }
         });
     };
 
 
     var getWeather = function() {
-        $('#weather_embed').attr('src', apiurl + 'embed/' + appId + '/sort/0');
+        $('#weather_embed').attr('src', apiurl + 'embed/' + _appId + '/sort/0');
+        updateBadge(_appId);
     };
 
-    var getAppId = function() {
+    var getAppId = function(callBack) {
         chrome.storage.sync.get('appId', function(items) {
-            appId = items.appId;
-            if (appId) {
-                getWeather();
+            _appId = items.appId;
+            if (_appId) {
+                callBack(_appId);
             } else {
-                register();
+                getCurrentLocation(register);
             }
         });
     };
-
 
     var installUpdate = function() {
         // chrome.runtime.onInstalled.addListener(function(details) {
@@ -91,13 +120,17 @@ APP.POPUP = function() {
     };
 
     window.onload = function() {
-        // $('#weather_embed').load(function() {
-        //     $('.loadingSpinner').fadeOut(1000);
-        // });
-        getAppId();
+        getAppId(getWeather);
+        getCurrentLocation(updateCurrentLocation);
+
+        $('#weather_embed').load(function() {
+            $('.loadingSpinner').fadeOut(200);
+        });
     };
 
     return {
-
+        installUpdate: installUpdate,
+        getAppId: getAppId,
+        updateBadge: updateBadge
     };
 }();
