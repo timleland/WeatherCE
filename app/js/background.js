@@ -7,7 +7,6 @@ APP.background = function() {
     });
 
     window.onload = function() {
-        //Update on load
         APP.popup.getAppId(APP.popup.updateBadge);
         chrome.alarms.clear('updateBadge');
         chrome.alarms.create('updateBadge', {

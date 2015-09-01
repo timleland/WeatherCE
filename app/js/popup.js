@@ -25,7 +25,6 @@ APP.popup = function() {
 
     var getCurrentLocation = function(callBack) {
         navigator.geolocation.getCurrentPosition(function(location) {
-            debugger
             getCityState(location.coords, callBack);
         });
     };
