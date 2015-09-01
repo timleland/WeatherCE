@@ -43,7 +43,7 @@ var getLocation = function() {
     if (zipcode) {
         getLocationFromZipcode(zipcode);
     } else if (savedCoords.latitude && savedCoords.longitude) {
-        getForecast(savedCoords, false)
+        getForecast(savedCoords, false);
         getCityState(savedCoords);
     } else {
         navigator.geolocation.getCurrentPosition(function(location) {
@@ -94,7 +94,7 @@ var getCityState = function(coords) {
 };
 
 var getForecast = function(coords) {
-    var randomApiKey = apikeys[Math.floor(Math.random() * apikeys.length)]
+    var randomApiKey = apikeys[Math.floor(Math.random() * apikeys.length)];
     var weatherUrl = 'https://api.forecast.io/forecast/' + randomApiKey + '/' + coords.latitude + ',' + coords.longitude;
 
     $.get(weatherUrl, function(data) {
@@ -123,7 +123,6 @@ var getForecast = function(coords) {
                 }, 1000);
             } else {
                 _gaq.push(['_trackEvent', 'Failed Multiple Times', 'Last Key: ' + randomApiKey]);
-                alert('Something went wrong. Please try again.')
             }
         }
     });
@@ -311,7 +310,6 @@ var installUpdate = function() {
 
 window.onload = function() {
     _gaq.push(['_trackEvent', 'Extension Opened', 'clicked']);
-
     updateSettingsText();
     getLocation();
     bindActions();
