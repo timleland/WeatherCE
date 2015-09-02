@@ -1,5 +1,6 @@
 APP.popup = function() {
-    var _appId;
+    var _appId,
+    _retryRegistration = 0;
     var register = function(coords, locationName) {
         $.ajax({
             url: apiurl + 'register',
@@ -93,33 +94,37 @@ APP.popup = function() {
         updateBadge(_appId);
     };
 
-    var getAppId = function(callBack) {
+    var getAppId = function(callBack, fromBackground) {
         chrome.storage.sync.get('appId', function(items) {
             _appId = items.appId;
             if (_appId) {
                 callBack(_appId);
-            } else {
+            } else if (fromBackground || _retryRegistration > 5) {
                 getCurrentLocation(register);
+            } else if (!fromBackground){
+                //Retry if background hasnt finished registering
+                window.setTimeout(function() {
+                    _retryRegistration++;
+                    getAppId(getWeather, false);
+                }, 1000);
             }
         });
     };
 
     var installUpdate = function() {
-        // chrome.runtime.onInstalled.addListener(function(details) {
-        //     if (details.reason == "install") {
-        //         getLocation();
-        //         window.open('http://timleland.com/weather-chrome-extension/');
-        //     } else if (details.reason == "update") {
-        //         getLocation();
-        //         //window.open('http://timleland.com/weather-chrome-extension/#update');
-        //         var thisVersion = chrome.runtime.getManifest().version;
-        //         console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
-        //     }
-        // });
+        chrome.runtime.onInstalled.addListener(function(details) {
+            if (details.reason == "install") {
+                window.open('http://timleland.com/weather-chrome-extension/');
+            } else if (details.reason == "update") {
+                window.open('http://timleland.com/weather-chrome-extension/');
+                var thisVersion = chrome.runtime.getManifest().version;
+                console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+            }
+        });
     };
 
     window.onload = function() {
-        getAppId(getWeather);
+        getAppId(getWeather, false);
         getCurrentLocation(updateCurrentLocation);
 
         $('#weather_embed').load(function() {

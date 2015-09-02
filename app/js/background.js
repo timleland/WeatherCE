@@ -7,10 +7,10 @@ APP.background = function() {
     });
 
     window.onload = function() {
-        APP.popup.getAppId(APP.popup.updateBadge);
+        APP.popup.getAppId(APP.popup.updateBadge, true);
         chrome.alarms.clear('updateBadge');
         chrome.alarms.create('updateBadge', {
-            periodInMinutes: 10
+            periodInMinutes: 30
         });
 
         APP.popup.installUpdate();
