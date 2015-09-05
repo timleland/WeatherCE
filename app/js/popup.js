@@ -1,6 +1,6 @@
 APP.popup = function() {
     var _appId,
-    _retryRegistration = 0;
+        _retryRegistration = 0;
     var register = function(coords, locationName) {
         $.ajax({
             url: apiurl + 'register',
@@ -47,6 +47,24 @@ APP.popup = function() {
         });
     };
 
+    var isNewNotification = function(notification) {
+        var notificationTracking = JSON.parse(localStorage.getItem('notificationTracking'));
+        if(notificationTracking){
+            for (var i = 0; i < notificationTracking.length; i++) {
+                if (notificationTracking[i].uri === notification.uri) {
+                    return false;
+                }
+            }
+        }else{
+            notificationTracking = [];
+        }
+
+        notificationTracking.push(notification);
+        localStorage.setItem('notificationTracking', JSON.stringify(notificationTracking));
+        //Is new notification
+        return true;
+    };
+
     var updateBadge = function(appId) {
         $.ajax({
             url: apiurl + 'badge/' + appId,
@@ -59,14 +77,23 @@ APP.popup = function() {
                     path: 'img/badge/' + data.icon
                 });
 
-                // var options = {
-                //     type: "basic",
-                //     title: "Weather",
-                //     message: "Current temperature " + data.temperature,
-                //     iconUrl: 'img/badge/' + data.icon
-                // };
-                //
-                // chrome.notifications.create('123', options);
+                data.alerts.forEach(function(alert) {
+                    if (isNewNotification(alert)) {
+                        var options = {
+                            body: alert.title,
+                            icon: 'img/alert.png'
+                        };
+
+                        var notice = new Notification('Weather Alert', options);
+
+                        notice.onclick = function() {
+                            chrome.tabs.create({
+                                url: alert.uri
+                            });
+                        };
+                    }
+                });
+
             }
         });
     };
