@@ -51,7 +51,7 @@ APP.popup = function() {
         var notificationTracking = JSON.parse(localStorage.getItem('notificationTracking'));
         if(notificationTracking){
             for (var i = 0; i < notificationTracking.length; i++) {
-                if (notificationTracking[i].uri === notification.uri) {
+                if (notificationTracking[i].time === notification.time) {
                     return false;
                 }
             }
@@ -65,7 +65,7 @@ APP.popup = function() {
         return true;
     };
 
-    var updateBadge = function(appId) {
+    var updateBadge = function(appId, fromBackground) {
         $.ajax({
             url: apiurl + 'badge/' + appId,
             type: 'GET',
@@ -76,26 +76,44 @@ APP.popup = function() {
                 chrome.browserAction.setIcon({
                     path: 'img/badge/' + data.icon
                 });
-
-                data.alerts.forEach(function(alert) {
-                    if (isNewNotification(alert)) {
-                        var options = {
-                            body: alert.title,
-                            icon: 'img/alert.png'
-                        };
-
-                        var notice = new Notification('Weather Alert', options);
-
-                        notice.onclick = function() {
-                            chrome.tabs.create({
-                                url: alert.uri
-                            });
-                        };
-                    }
-                });
-
+                
+                if(fromBackground){
+                    showAlertNotification(data.alerts);
+                    displayNotification(data.precipAlert);
+                }
             }
         });
+    };
+
+    var showAlertNotification = function(alerts){
+        alerts.forEach(function(alert) {
+            if (isNewNotification(alert)) {
+                //Alert original title is description text
+                alert.description = alert.title;
+                alert.title = 'Weather Alert';
+                alert.image = 'img/alert.png';
+                displayNotification(alert);
+            }
+        });
+    };
+
+    var displayNotification = function(alert){
+        if(!alert){
+            return false;
+        }
+
+        var options = {
+            body: alert.description,
+            icon: alert.image
+        };
+
+        var notice = new Notification(alert.title, options);
+
+        notice.onclick = function() {
+            chrome.tabs.create({
+                url: alert.uri
+            });
+        };
     };
 
     var updateCurrentLocation = function(coords, locationName) {
@@ -125,7 +143,7 @@ APP.popup = function() {
         chrome.storage.sync.get('appId', function(items) {
             _appId = items.appId;
             if (_appId) {
-                callBack(_appId);
+                callBack(_appId, fromBackground);
             } else if (fromBackground || _retryRegistration > 5) {
                 getCurrentLocation(register);
             } else if (!fromBackground){
@@ -143,7 +161,7 @@ APP.popup = function() {
             if (details.reason == "install") {
                 window.open('http://timleland.com/weather-chrome-extension/');
             } else if (details.reason == "update") {
-                window.open('http://timleland.com/weather-chrome-extension/');
+                //window.open('http://timleland.com/weather-chrome-extension/');
                 var thisVersion = chrome.runtime.getManifest().version;
                 console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
             }

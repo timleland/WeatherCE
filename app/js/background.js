@@ -2,7 +2,7 @@ APP.background = function() {
 
     chrome.alarms.onAlarm.addListener(function(alarm) {
         if (alarm.name == 'updateBadge') {
-            APP.popup.getAppId(APP.popup.updateBadge);
+            APP.popup.getAppId(APP.popup.updateBadge, true);
         }
     });
 
