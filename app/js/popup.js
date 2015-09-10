@@ -51,7 +51,7 @@ APP.popup = function() {
         var notificationTracking = JSON.parse(localStorage.getItem('notificationTracking'));
         if(notificationTracking){
             for (var i = 0; i < notificationTracking.length; i++) {
-                if (notificationTracking[i].time === notification.time) {
+                if (notificationTracking[i].uri === notification.uri) {
                     return false;
                 }
             }
@@ -76,7 +76,7 @@ APP.popup = function() {
                 chrome.browserAction.setIcon({
                     path: 'img/badge/' + data.icon
                 });
-                
+
                 if(fromBackground){
                     showAlertNotification(data.alerts);
                     displayNotification(data.precipAlert);
@@ -114,6 +114,10 @@ APP.popup = function() {
                 url: alert.uri
             });
         };
+        //Close after 30 secs
+        setTimeout(function(){
+            notice.close();
+        }, 30000);
     };
 
     var updateCurrentLocation = function(coords, locationName) {
