@@ -114,10 +114,10 @@ APP.popup = function() {
                 url: alert.uri
             });
         };
-        //Close after 30 secs
+        //Close after 60 secs
         setTimeout(function(){
             notice.close();
-        }, 30000);
+        }, 60000);
     };
 
     var updateCurrentLocation = function(coords, locationName) {
