@@ -70,11 +70,31 @@ APP.popup = function() {
             url: apiurl + 'badge/' + appId,
             type: 'GET',
             success: function(data) {
-                chrome.browserAction.setBadgeText({
-                    text: data.temperature //+ '°'
-                });
-                chrome.browserAction.setIcon({
-                    path: 'img/badge/' + data.icon
+                if(data.icon){
+                    chrome.browserAction.setBadgeText({
+                        text: data.temperature
+                    });
+                    chrome.browserAction.setIcon({
+                        path: 'img/badge/' + data.icon
+                    });
+                }else{
+                    var ctx = document.createElement('canvas').getContext('2d');
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                    ctx.textBaseline = 'top';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(data.temperature, 9.5, 1, 19);
+                    chrome.browserAction.setIcon({
+                        imageData: ctx.getImageData(0, 0, 19, 19)
+                    });
+
+                    chrome.browserAction.setBadgeText({
+                        text: ''
+                    });
+                }
+
+                chrome.browserAction.setTitle({
+                    title: data.summary ? data.summary : data.temperature
                 });
 
                 if(fromBackground){

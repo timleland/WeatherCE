@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "The best weather extension using ForeCast.io API",
   "icons": {
     "48": "img/icon48.png",
