@@ -1,13 +1,13 @@
 {
   "name": "Weather",
-  "version": "3.4.2",
-  "description": "The best weather extension using ForeCast.io API",
+  "version": "3.4.3",
+  "description": "The best way to see the weather right in your browser. Easier than looking outside!",
   "icons": {
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
   "background": {
-    "scripts": ["vendor/js/jquery-2.1.4.min.js", "js/init.js", "js/popup.js", "js/background.js"]
+    "scripts": ["vendor/js/jquery-2.1.4.min.js", "js/ga.js", "js/init.js", "js/popup.js", "js/background.js"]
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action" : {

@@ -11,6 +11,26 @@ _gaq.push(['_trackPageview']);
     ga.src = 'https://ssl.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
+
+    // Track basic JavaScript errors
+    window.addEventListener('error', function(e) {
+        _gaq.push([
+            '_trackEvent',
+            'JavaScript Error',
+            e.message,
+            e.filename + ':  ' + e.lineno
+        ]);
+    });
+
+    // Track AJAX errors (jQuery API)
+    $(document).ajaxError(function(e, request, settings) {
+        _gaq.push([
+            '_trackEvent',
+            'Ajax error',
+            settings.url,
+            e.result
+        ]);
+    });
 })();
 
 function trackLinkClick(e) {
