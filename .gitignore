@@ -1,2 +1,4 @@
 config/*
 .DS_Store
+app.nex
+app.pem

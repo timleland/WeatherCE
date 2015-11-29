@@ -187,7 +187,7 @@ APP.popup = function() {
             } else if (details.reason == "update") {
                 //window.open('http://timleland.com/weather-chrome-extension/');
                 var thisVersion = chrome.runtime.getManifest().version;
-                console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+                //console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
             }
         });
     };
