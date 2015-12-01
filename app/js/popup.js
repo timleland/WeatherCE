@@ -39,7 +39,7 @@ APP.popup = function() {
             //http://www.raymondcamden.com/2013/03/05/Simple-Reverse-Geocoding-Example
             var result = data.results[0];
             var locationName = 'Cannot find location...';
-            if(!result.address_components){
+            if(result.address_components){
                 for (var i = 0, len = result.address_components.length; i < len; i++) {
                     var ac = result.address_components[i];
                     if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
