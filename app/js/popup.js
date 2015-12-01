@@ -15,6 +15,7 @@ APP.popup = function() {
             },
             success: function(data) {
                 _appId = data.app_id;
+                uninstallLink();
                 chrome.storage.sync.set({
                     appId: _appId
                 }, function() {
@@ -49,13 +50,13 @@ APP.popup = function() {
 
     var isNewNotification = function(notification) {
         var notificationTracking = JSON.parse(localStorage.getItem('notificationTracking'));
-        if(notificationTracking){
+        if (notificationTracking) {
             for (var i = 0; i < notificationTracking.length; i++) {
                 if (notificationTracking[i].uri === notification.uri) {
                     return false;
                 }
             }
-        }else{
+        } else {
             notificationTracking = [];
         }
 
@@ -70,14 +71,14 @@ APP.popup = function() {
             url: apiurl + 'badge/' + appId,
             type: 'GET',
             success: function(data) {
-                if(data.icon){
+                if (data.icon) {
                     chrome.browserAction.setBadgeText({
                         text: data.temperature
                     });
                     chrome.browserAction.setIcon({
                         path: 'img/badge/' + data.icon
                     });
-                }else{
+                } else {
                     var ctx = document.createElement('canvas').getContext('2d');
                     ctx.font = 'bold 18px Arial';
                     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -97,7 +98,7 @@ APP.popup = function() {
                     title: data.summary ? data.summary : data.temperature
                 });
 
-                if(fromBackground){
+                if (fromBackground) {
                     showAlertNotification(data.alerts);
                     displayNotification(data.precipAlert);
                 }
@@ -105,7 +106,7 @@ APP.popup = function() {
         });
     };
 
-    var showAlertNotification = function(alerts){
+    var showAlertNotification = function(alerts) {
         alerts.forEach(function(alert) {
             if (isNewNotification(alert)) {
                 //Alert original title is description text
@@ -117,8 +118,8 @@ APP.popup = function() {
         });
     };
 
-    var displayNotification = function(alert){
-        if(!alert){
+    var displayNotification = function(alert) {
+        if (!alert) {
             return false;
         }
 
@@ -135,7 +136,7 @@ APP.popup = function() {
             });
         };
         //Close after 60 secs
-        setTimeout(function(){
+        setTimeout(function() {
             notice.close();
         }, 60000);
     };
@@ -167,10 +168,11 @@ APP.popup = function() {
         chrome.storage.sync.get('appId', function(items) {
             _appId = items.appId;
             if (_appId) {
+                uninstallLink();
                 callBack(_appId, fromBackground);
             } else if (fromBackground || _retryRegistration > 5) {
                 getCurrentLocation(register);
-            } else if (!fromBackground){
+            } else if (!fromBackground) {
                 //Retry if background hasnt finished registering
                 window.setTimeout(function() {
                     _retryRegistration++;
@@ -190,6 +192,10 @@ APP.popup = function() {
                 //console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
             }
         });
+    };
+
+    var uninstallLink = function() {
+        chrome.runtime.setUninstallURL(baseUrl + 'uninstall/' + _appId);
     };
 
     window.onload = function() {
