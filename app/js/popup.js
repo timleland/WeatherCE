@@ -38,12 +38,20 @@ APP.popup = function() {
             //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
             //http://www.raymondcamden.com/2013/03/05/Simple-Reverse-Geocoding-Example
             var result = data.results[0];
-            for (var i = 0, len = result.address_components.length; i < len; i++) {
-                var ac = result.address_components[i];
-                if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
-                if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
+            var locationName = 'Cannot find location...';
+            if(!result.address_components){
+                for (var i = 0, len = result.address_components.length; i < len; i++) {
+                    var ac = result.address_components[i];
+                    if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
+                    if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
+                }
+
+                locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
+            }else{
+                coords.latitude = 32.3000;
+                coords.longitude = 64.7833;
             }
-            var locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
+
             callBack(coords, locationName);
         });
     };
