@@ -110,6 +110,11 @@ APP.popup = function() {
                     showAlertNotification(data.alerts);
                     displayNotification(data.precipAlert);
                 }
+            },
+            error: function(){
+                chrome.browserAction.setIcon({
+                    path: 'img/icon48.png'
+                });
             }
         });
     };
