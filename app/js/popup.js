@@ -174,7 +174,7 @@ APP.popup = function() {
 
     var getWeather = function() {
         $('#weather_embed').attr('src', apiurl + 'embed/' + _appId + '/sort/0');
-        updateBadge(_appId);
+        setTimeout(function(){ updateBadge(_appId, false); }, 4000);
     };
 
     var getAppId = function(callBack, fromBackground) {

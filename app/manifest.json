@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.4.8",
+  "version": "3.4.9",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
   "icons": {
     "48": "img/icon48.png",
