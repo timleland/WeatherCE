@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.4.9",
+  "version": "3.5.1",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
   "icons": {
     "48": "img/icon48.png",
@@ -15,6 +15,7 @@
     "default_title": "Weather",
     "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "manifest_version": 2,
-  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*", "*://*.timleland.com/*"]
+  "permissions": [ "alarms", "storage", "geolocation", "*://*.forecast.io/*", "*://*.timleland.com/*", "notifications"]
 }

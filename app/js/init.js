@@ -3,7 +3,7 @@ var baseUrl = 'https://weather.timleland.com/';
 
 var apiurl = baseUrl + 'api/v1/';
 var APP = {};
-APP.COMMON = function () {
+APP.common = function () {
 
     return {
         init: function () {

@@ -7,6 +7,14 @@ body{
     display: block;
 }
 
+#options_embed {
+    width: 523px;
+    height: 397px;
+    display: block;
+    margin: 50px auto;
+    border: 1px solid #ecf0f1;
+}
+
 .hidden {
     display: none;
 }
