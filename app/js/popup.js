@@ -32,7 +32,7 @@ APP.popup = function() {
     };
 
     var getCityState = function(coords, callBack) {
-        var locationUrl = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=true&latlng=' + coords.latitude + ',' + coords.longitude;
+        var locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=true&latlng=' + coords.latitude + ',' + coords.longitude;
         $.get(locationUrl, function(data) {
             var state, city;
             //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
