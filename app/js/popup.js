@@ -84,7 +84,7 @@ APP.popup = function() {
                         text: data.temperature
                     });
                     chrome.browserAction.setIcon({
-                        path: 'img/badge/' + data.icon
+                        path: { '38': 'img/badge/' + data.icon }
                     });
                 } else {
                     var ctx = document.createElement('canvas').getContext('2d');
