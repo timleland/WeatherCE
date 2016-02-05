@@ -28,7 +28,7 @@ _gaq.push(['_trackPageview']);
             '_trackEvent',
             'Ajax error',
             settings.url,
-            e.result
+            request.statusText
         ]);
     });
 })();
