@@ -38,7 +38,7 @@ APP.popup = function() {
             //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
             //http://www.raymondcamden.com/2013/03/05/Simple-Reverse-Geocoding-Example
             var result = data.results[0];
-            var locationName = 'Cannot find location...';
+            var locationName = 'Unknown location: Set manually';
             if(result && result.address_components){
                 for (var i = 0, len = result.address_components.length; i < len; i++) {
                     var ac = result.address_components[i];
@@ -84,12 +84,12 @@ APP.popup = function() {
                         text: data.temperature
                     });
                     chrome.browserAction.setIcon({
-                        path: { '38': 'img/badge/' + data.icon }
+                        path: { '38': 'img/badge/' + (data.lightBadge ? 'light/' : '') + data.icon }
                     });
                 } else {
                     var ctx = document.createElement('canvas').getContext('2d');
                     ctx.font = 'bold 18px Arial';
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                    ctx.fillStyle = data.lightBadge ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0.8)';
                     ctx.textBaseline = 'top';
                     ctx.textAlign = 'center';
                     ctx.fillText(data.temperature, 9.5, 1, 19);
