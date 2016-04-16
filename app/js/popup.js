@@ -11,7 +11,8 @@ APP.popup = function() {
                 latitude: coords.latitude,
                 longitude: coords.longitude,
                 type: 'geo',
-                location_name: locationName
+                location_name: locationName,
+                extension_type: _extensionType
             },
             success: function(data) {
                 _appId = data.app_id;
@@ -163,7 +164,8 @@ APP.popup = function() {
                 longitude: coords.longitude,
                 type: 'geo',
                 app_id: _appId,
-                location_name: locationName
+                location_name: locationName,
+                extension_type: _extensionType
             },
             success: function(data) {
                 //Current location should be updated. User will have to refresh to see changes
