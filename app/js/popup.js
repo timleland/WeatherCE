@@ -25,7 +25,16 @@ APP.popup = function() {
         });
     };
 
+<<<<<<< HEAD
     var getCurrentLocation = function(callBack) {
+=======
+    if (zipcode) {
+        getLocationFromZipcode(zipcode);
+    } else if (savedCoords.latitude && savedCoords.longitude) {
+        getForecast(savedCoords, false);
+        getCityState(savedCoords);
+    } else {
+>>>>>>> 14a6e378513a83c4b311ee72eed941dd2410f839
         navigator.geolocation.getCurrentPosition(function(location) {
             getCityState(location.coords, callBack);
         });
@@ -68,6 +77,7 @@ APP.popup = function() {
             notificationTracking = [];
         }
 
+<<<<<<< HEAD
         notificationTracking.push(notification);
         localStorage.setItem('notificationTracking', JSON.stringify(notificationTracking));
         //Is new notification
@@ -115,6 +125,38 @@ APP.popup = function() {
                 chrome.browserAction.setIcon({
                     path: 'img/icon48.png'
                 });
+=======
+var getForecast = function(coords) {
+    var randomApiKey = apikeys[Math.floor(Math.random() * apikeys.length)];
+    var weatherUrl = 'https://api.forecast.io/forecast/' + randomApiKey + '/' + coords.latitude + ',' + coords.longitude;
+
+    $.get(weatherUrl, function(data) {
+        _gaq.push(['_trackEvent', 'Get Weather', 'auto']);
+        console.log(data);
+        if ($('#popup').length > 0) {
+            $('.tooltip li, .temperature').tooltipster({
+                contentAsHTML: true,
+                animation: 'grow',
+                maxWidth: 150
+            });
+            displayForcast(data.daily);
+            displayCurrent(data.currently);
+            displayHourly(data.hourly);
+            displayAlerts(data.alerts);
+        }
+
+        updateBadge(data.currently.temperature, data.currently.icon);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        if (xhr.status == 403) {
+            _gaq.push(['_trackEvent', 'Key Failed', randomApiKey]);
+            if (getWeatherRetry < 3) {
+                getWeatherRetry++;
+                setTimeout(function() {
+                    getLocation();
+                }, 1000);
+            } else {
+                _gaq.push(['_trackEvent', 'Failed Multiple Times', 'Last Key: ' + randomApiKey]);
+>>>>>>> 14a6e378513a83c4b311ee72eed941dd2410f839
             }
         });
     };
@@ -211,6 +253,7 @@ APP.popup = function() {
         chrome.runtime.setUninstallURL(baseUrl + 'uninstall/' + _appId);
     };
 
+<<<<<<< HEAD
     window.onload = function() {
         getAppId(getWeather, false);
         getCurrentLocation(updateCurrentLocation);
@@ -226,3 +269,11 @@ APP.popup = function() {
         updateBadge: updateBadge
     };
 }();
+=======
+window.onload = function() {
+    _gaq.push(['_trackEvent', 'Extension Opened', 'clicked']);
+    updateSettingsText();
+    getLocation();
+    bindActions();
+};
+>>>>>>> 14a6e378513a83c4b311ee72eed941dd2410f839
