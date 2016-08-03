@@ -20,7 +20,7 @@ APP.popup = function() {
                 chrome.storage.sync.set({
                     appId: _appId
                 }, function() {
-                    getWeather();
+                    updateBadge(_appId, true);
                 });
             }
         });
