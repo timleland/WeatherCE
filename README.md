@@ -1,3 +1,4 @@
+[![Project Sponsored By ReactForBeginners.com](https://img.shields.io/badge/👍_Project_Sponsored_By-ReactForBeginners.com Tutorials-brightgreen.svg?style=flat-square)](https://ReactForBeginners.com/friend/TIM)
 ####Weather Extension (Chrome & Opera)
 The Best Weather extension using [Dark Sky's Forecast.io API](https://developer.forecast.io/)
 
