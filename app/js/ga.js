@@ -23,12 +23,12 @@ _gaq.push(['_trackPageview']);
     });
 
     // Track AJAX errors (jQuery API)
-    $(document).ajaxError(function(e, request, settings) {
+    $(document).ajaxError(function(e, request, settings, thrownError) {
         _gaq.push([
             '_trackEvent',
             'Ajax error',
             settings.url,
-            request.statusText
+            request.statusText + ' - ' + thrownError + ' Response Code: ' + request.status
         ]);
     });
 })();
