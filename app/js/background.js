@@ -5,15 +5,13 @@ APP.background = function() {
         }
     });
 
-    window.onload = function() {
-        //Init/clear notification tracking
-        localStorage.setItem('notificationTracking', JSON.stringify([]));
-        APP.popup.getAppId(APP.popup.updateBadge, true);
-        chrome.alarms.clear('updateBadge');
-        chrome.alarms.create('updateBadge', {
-            periodInMinutes: 30
-        });
+    //Init/clear notification tracking
+    localStorage.setItem('notificationTracking', JSON.stringify([]));
+    APP.popup.getAppId(APP.popup.updateBadge, true);
+    chrome.alarms.clear('updateBadge');
+    chrome.alarms.create('updateBadge', {
+        periodInMinutes: 30
+    });
 
-        APP.popup.installUpdate();
-    };
+    APP.popup.installUpdate();
 }();

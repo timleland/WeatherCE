@@ -16,14 +16,23 @@ APP.popup = function() {
             },
             success: function(data) {
                 _appId = data.app_id;
-                chrome.storage.sync.set({
-                    appId: _appId
-                }, function() {
-                    uninstallLink();
-                    updateBadge(_appId, true);
-                });
+                storeAppId();
             }
         });
+    };
+
+    var storeAppId = function(){
+        if (_extensionType == 'Firefox') {
+            chrome.storage.local.set({ appId: _appId }, storeAppIdComplete);
+        } else {
+            chrome.storage.sync.set({ appId: _appId }, storeAppIdComplete);
+        }
+    };
+
+    var storeAppIdComplete = function(){
+        uninstallLink();
+        updateBadge(true);
+        getWeatherEmbed();
     };
 
     var getCurrentLocation = function(callBack) {
@@ -43,8 +52,8 @@ APP.popup = function() {
             if(result && result.address_components){
                 for (var i = 0, len = result.address_components.length; i < len; i++) {
                     var ac = result.address_components[i];
-                    if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
-                    if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
+                    if (ac.types.indexOf('locality') >= 0) city = ac.long_name;
+                    if (ac.types.indexOf('administrative_area_level_1') >= 0) state = ac.short_name;
                 }
 
                 locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
@@ -75,16 +84,16 @@ APP.popup = function() {
         return true;
     };
 
-    var updateBadge = function(appId, fromBackground) {
+    var updateBadge = function(fromBackground) {
         $.ajax({
-            url: _apiUrl + 'badge/' + appId,
+            url: _apiUrl + 'badge/' + _appId,
             type: 'GET',
             success: function(data) {
                 if (data.icon) {
                     chrome.browserAction.setBadgeText({
                         text: data.temperature
                     });
-                    
+
                     chrome.browserAction.setIcon({
                         path: { '38': 'img/badge/' + (data.lightBadge ? 'light/' : '') + data.icon }
                     });
@@ -137,23 +146,22 @@ APP.popup = function() {
         if (!alert) {
             return false;
         }
+        chrome.notifications.create(null, {
+            'type': 'basic',
+            'iconUrl': chrome.extension.getURL(alert.image),
+            'title': alert.title,
+            'message': alert.description
+        }, function(notificationId){
+            chrome.notifications.onClicked.addListener(function(notificationIdClicked) {
+                if(notificationIdClicked === notificationId){
+                    chrome.tabs.create({
+                        url: alert.uri
+                    });
 
-        var options = {
-            body: alert.description,
-            icon: alert.image
-        };
-
-        var notice = new Notification(alert.title, options);
-
-        notice.onclick = function() {
-            chrome.tabs.create({
-                url: alert.uri
+                  chrome.notifications.clear(notificationId);
+              }
             });
-        };
-        //Close after 60 secs
-        setTimeout(function() {
-            notice.close();
-        }, 60000);
+        });
     };
 
     var updateCurrentLocation = function(coords, locationName) {
@@ -175,51 +183,63 @@ APP.popup = function() {
     };
 
 
-    var getWeather = function() {
+    var getWeatherEmbed = function() {
         $('#weather_embed').attr('src', _apiUrl + 'embed/' + _appId + '/sort/0');
     };
 
     var getAppId = function(callBack, fromBackground) {
-        chrome.storage.sync.get('appId', function(items) {
-            _appId = items.appId;
-            if (_appId) {
-                uninstallLink();
-                callBack(_appId, fromBackground);
-            } else if (fromBackground || _retryRegistration > 5) {
-                getCurrentLocation(register);
-            } else if (!fromBackground) {
-                //Retry if background hasnt finished registering
-                window.setTimeout(function() {
-                    _retryRegistration++;
-                    getAppId(getWeather, false);
-                }, 1000);
-            }
-        });
+        if (_extensionType == 'Firefox') {
+            chrome.storage.local.get('appId', function(items){
+               handleGetAppId(callBack, fromBackground, items);
+            });
+        } else {
+            chrome.storage.sync.get('appId', function(items){
+                handleGetAppId(callBack, fromBackground, items);
+            });
+        }
+    };
+
+    var handleGetAppId = function(callBack, fromBackground, items) {
+        _appId = items.appId;
+        if (_appId) {
+            getCurrentLocation(updateCurrentLocation);
+            uninstallLink();
+            callBack(fromBackground);
+        } else if (fromBackground || _retryRegistration > 5) {
+            getCurrentLocation(register);
+        } else if (!fromBackground) {
+            //Retry if background hasnt finished registering
+            window.setTimeout(function() {
+                _retryRegistration++;
+                getAppId(getWeatherEmbed, false);
+            }, 1000);
+        }
     };
 
     var installUpdate = function() {
-        chrome.runtime.onInstalled.addListener(function(details) {
-            if (details.reason == 'install') {
-                window.open('http://timleland.com/weather-chrome-extension/');
-            } else if (details.reason == "update") {
-                var thisVersion = chrome.runtime.getManifest().version;
-                //console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
-            }
-        });
+        if(chrome && chrome.runtime && chrome.runtime.onInstalled) {
+            chrome.runtime.onInstalled.addListener(function(details) {
+                if (details.reason == 'install') {
+                    window.open('http://timleland.com/weather-chrome-extension/');
+                } else if (details.reason == 'update') {
+                    var thisVersion = chrome.runtime.getManifest().version;
+                    //console.log('Updated from ' + details.previousVersion + ' to ' + thisVersion + '!');
+                }
+            });
+        }
     };
 
     var uninstallLink = function() {
-        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL){
+        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL) {
             chrome.runtime.setUninstallURL(_baseUrl + 'uninstall/' + _appId);
         }
     };
 
     window.onload = function() {
-        getAppId(getWeather, false);
-        getCurrentLocation(updateCurrentLocation);
+        getAppId(getWeatherEmbed, false);
 
         $('#weather_embed').load(function() {
-            updateBadge(_appId, false);
+            updateBadge(false);
             $('.loadingSpinner').fadeOut(5);
         });
     };
