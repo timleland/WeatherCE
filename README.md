@@ -2,9 +2,9 @@
 ####Weather Extension (Chrome & Opera)
 The Best Weather extension using [Dark Sky's Forecast.io API](https://developer.forecast.io/)
 
-**To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb) | 
+**To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb)
 | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-extension/)
-[Opera](https://addons.opera.com/en/extensions/details/weather-2/?display=en)
+| [Opera](https://addons.opera.com/en/extensions/details/weather-2/?display=en)
 
 *Automatically locates and displays your current weather, hourly and 5 day forecast. The app icon will automatically update to your current temperature. Very easy to use!*
 
