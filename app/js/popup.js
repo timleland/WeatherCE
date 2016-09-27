@@ -235,6 +235,14 @@ APP.popup = function() {
         }
     };
 
+    var registerIframeEventListener = function(){
+        window.addEventListener('message', function(message){
+            if(message.data.type === 'reloadBadge'){
+                updateBadge(false);
+            }
+        });
+    };
+
     window.onload = function() {
         getAppId(getWeatherEmbed, false);
 
@@ -242,6 +250,8 @@ APP.popup = function() {
             updateBadge(false);
             $('.loadingSpinner').fadeOut(5);
         });
+
+        registerIframeEventListener()
     };
 
     return {

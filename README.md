@@ -1,6 +1,6 @@
 [![Project Sponsored By ReactForBeginners.com](https://img.shields.io/badge/👍_Project_Sponsored_By-ReactForBeginners.com Tutorials-brightgreen.svg?style=flat-square)](https://ReactForBeginners.com/friend/TIM)
 ####Weather Extension (Chrome & Opera)
-The Best Weather extension using [Dark Sky's Forecast.io API](https://developer.forecast.io/)
+The Best Weather extension using [Dark Sky's API](https://darksky.net/dev/)
 
 **To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb)
 | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-extension/)
@@ -12,7 +12,7 @@ The Best Weather extension using [Dark Sky's Forecast.io API](https://developer.
  * Geolocation
  * Set custom location by address or zipcode
  * Choose Fahrenheit or Celsius
- * Hourly forecast 
+ * Hourly forecast
  * 5 day forecast
 
 **Blog Post:** [TimLeland.com/weather-chrome-extension](http://timleland.com/weather-chrome-extension/)
