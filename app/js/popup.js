@@ -97,6 +97,8 @@ APP.popup = function() {
                     chrome.browserAction.setIcon({
                         path: { '38': 'img/badge/' + (data.lightBadge ? 'light/' : '') + data.icon }
                     });
+
+                    chrome.browserAction.setBadgeBackgroundColor({ color: '#222222' });
                 } else {
                     var ctx = document.createElement('canvas').getContext('2d');
                     ctx.font = 'bold 18px Arial';
@@ -248,7 +250,7 @@ APP.popup = function() {
 
         $('#weather_embed').load(function() {
             updateBadge(false);
-            $('.loadingSpinner').fadeOut(5);
+            // $('.loadingSpinner').fadeOut(5);
         });
 
         registerIframeEventListener()
