@@ -167,6 +167,10 @@ APP.popup = function() {
     };
 
     var updateCurrentLocation = function(coords, locationName) {
+        if(!_appId){
+            return;
+        }
+
         $.ajax({
             url: _apiUrl + 'location',
             type: 'POST',
@@ -232,7 +236,7 @@ APP.popup = function() {
     };
 
     var uninstallLink = function() {
-        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL) {
+        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL && _appId) {
             chrome.runtime.setUninstallURL(_baseUrl + 'uninstall/' + _appId);
         }
     };
