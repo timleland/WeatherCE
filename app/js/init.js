@@ -1,6 +1,11 @@
 //var _baseUrl = 'http://weatherapi.dev/';
 var _baseUrl = 'https://weather.timleland.com/';
-var _extensionType = 'Chrome'; //Firefox //Opera
+var _extensionType = 'Chrome'; //Chrome //Opera //Firefox
+
+if(typeof platform !== 'undefined' && (platform.name == 'Chrome' || platform.name == 'Opera' || platform.name == 'Firefox')){
+    _extensionType = platform.name;
+}
+
 var _apiUrl = _baseUrl + 'api/v1/';
 var APP = {};
 

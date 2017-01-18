@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.5.97",
+  "version": "3.6.0",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
 
   "icons": {
@@ -8,7 +8,7 @@
     "128": "img/icon128.png"
   },
   "background": {
-    "scripts": ["vendor/js/jquery-2.1.4.min.js", "js/init.js", "js/ga.js", "js/popup.js", "js/background.js"],
+    "scripts": ["vendor/js/jquery-2.1.4.min.js", "vendor/js/platform-1.3.3.min.js", "js/init.js", "js/ga.js", "js/popup.js", "js/background.js"],
     "persistent": true
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",

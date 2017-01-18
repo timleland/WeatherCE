@@ -226,7 +226,10 @@ APP.popup = function() {
         if(chrome && chrome.runtime && chrome.runtime.onInstalled) {
             chrome.runtime.onInstalled.addListener(function(details) {
                 if (details.reason == 'install') {
-                    window.open('http://timleland.com/weather-chrome-extension/');
+                    setTimeout(function(){
+                        window.open('https://timleland.com/weather-extension/');
+                     }, 3000);
+
                 } else if (details.reason == 'update') {
                     var thisVersion = chrome.runtime.getManifest().version;
                     //console.log('Updated from ' + details.previousVersion + ' to ' + thisVersion + '!');
