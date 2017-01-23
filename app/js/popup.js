@@ -257,7 +257,7 @@ APP.popup = function() {
 
         $('#weather_embed').load(function() {
             updateBadge(false);
-            // $('.loadingSpinner').fadeOut(5);
+            $('.loadingSpinner').fadeOut(5);
         });
 
         registerIframeEventListener()

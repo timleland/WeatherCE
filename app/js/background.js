@@ -10,7 +10,7 @@ APP.background = function() {
     APP.popup.getAppId(APP.popup.updateBadge, true);
     chrome.alarms.clear('updateBadge');
     chrome.alarms.create('updateBadge', {
-        periodInMinutes: 30
+        periodInMinutes: 45
     });
 
     APP.popup.installUpdate();
