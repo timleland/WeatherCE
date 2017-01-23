@@ -1,5 +1,4 @@
 APP.options = function() {
-
     var setPageUrl = function() {
         chrome.storage.sync.get('appId', function(items) {
             if (items.appId) {

@@ -6,11 +6,8 @@ APP.popup = function() {
             url: _apiUrl + 'register',
             type: 'POST',
             data: {
-                temp_scale: localStorage.getItem('tempScale'),
-                time_format: localStorage.getItem('timeScale'),
                 latitude: coords.latitude,
                 longitude: coords.longitude,
-                type: 'geo',
                 location_name: locationName,
                 extension_type: _extensionType
             },
@@ -36,9 +33,19 @@ APP.popup = function() {
     };
 
     var getCurrentLocation = function(callBack) {
-        navigator.geolocation.getCurrentPosition(function(location) {
-            getCityState(location.coords, callBack);
-        });
+        if (_extensionType == 'Firefox') {
+            var coords = {
+                longitude: null,
+                latitude: null
+            };
+
+            var locationName = null;
+            callBack(coords, locationName);
+        }else{
+            navigator.geolocation.getCurrentPosition(function(location) {
+                getCityState(location.coords, callBack);
+            });
+        }
     };
 
     var getCityState = function(coords, callBack) {
@@ -48,7 +55,7 @@ APP.popup = function() {
             //http://stackoverflow.com/questions/6797569/get-city-name-using-geolocation
             //http://www.raymondcamden.com/2013/03/05/Simple-Reverse-Geocoding-Example
             var result = data.results[0];
-            var locationName = 'Unknown location: Set manually';
+            var locationName = null;
             if(result && result.address_components){
                 for (var i = 0, len = result.address_components.length; i < len; i++) {
                     var ac = result.address_components[i];
@@ -58,8 +65,8 @@ APP.popup = function() {
 
                 locationName = (city ? city : '') + (city && state ? ', ' : '') + (state ? state : '');
             }else{
-                coords.latitude = 32.3000;
-                coords.longitude = 64.7833;
+                coords.latitude = null;
+                coords.longitude = null;
             }
 
             callBack(coords, locationName);
@@ -172,15 +179,13 @@ APP.popup = function() {
         }
 
         $.ajax({
-            url: _apiUrl + 'location',
+            url: _apiUrl + 'geoLocation',
             type: 'POST',
             data: {
                 latitude: coords.latitude,
                 longitude: coords.longitude,
-                type: 'geo',
                 app_id: _appId,
-                location_name: locationName,
-                extension_type: _extensionType
+                location_name: locationName
             },
             success: function(data) {
                 //Current location should be updated. User will have to refresh to see changes
@@ -211,7 +216,7 @@ APP.popup = function() {
             getCurrentLocation(updateCurrentLocation);
             uninstallLink();
             callBack(fromBackground);
-        } else if (fromBackground || _retryRegistration > 5) {
+        } else if (fromBackground || _retryRegistration > 10) {
             getCurrentLocation(register);
         } else if (!fromBackground) {
             //Retry if background hasnt finished registering
@@ -239,7 +244,7 @@ APP.popup = function() {
     };
 
     var uninstallLink = function() {
-        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL && _appId) {
+        if(chrome && chrome.runtime && chrome.runtime.setUninstallURL && _appId && !$.isEmptyObject(_appId)) {
             chrome.runtime.setUninstallURL(_baseUrl + 'uninstall/' + _appId);
         }
     };
