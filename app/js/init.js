@@ -1,5 +1,5 @@
-//var _baseUrl = 'http://weatherapi.dev/';
-var _baseUrl = 'https://weather.timleland.com/';
+var _baseUrl = 'https://weatherapi.dev/';
+//var _baseUrl = 'https://weather.timleland.com/';
 var _extensionType = 'Chrome'; //Chrome //Opera //Firefox
 
 if(typeof platform !== 'undefined' && (platform.name == 'Chrome' || platform.name == 'Opera' || platform.name == 'Firefox')){
