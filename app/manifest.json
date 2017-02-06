@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.6.1",
+  "version": "4.0.0",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
 
   "icons": {
@@ -17,7 +17,7 @@
     "default_title": "Weather",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+
   "manifest_version": 2,
   "permissions": [ "alarms", "storage", "geolocation", "*://*.weatherapi.dev/*", "notifications"]
 
