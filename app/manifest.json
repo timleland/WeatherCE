@@ -11,7 +11,7 @@
     "page": "background.html",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://weatherapi.dev 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://weather.timleland.com 'unsafe-eval'; object-src 'self'",
   "browser_action" : {
 	"default_icon": { "38": "img/icon38.png" },
     "default_title": "Weather",
@@ -19,6 +19,6 @@
   },
 
   "manifest_version": 2,
-  "permissions": [ "alarms", "storage", "geolocation", "*://*.weatherapi.dev/*", "notifications"]
+  "permissions": [ "alarms", "storage", "geolocation", "*://*.timleland.com/*", "notifications"]
 
 }
