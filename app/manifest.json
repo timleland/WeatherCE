@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "3.6.1",
+  "version": "4.0.0",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
 
   "icons": {
@@ -8,16 +8,16 @@
     "128": "img/icon128.png"
   },
   "background": {
-    "scripts": ["vendor/js/jquery-2.1.4.min.js", "vendor/js/platform-1.3.3.min.js", "js/init.js", "js/ga.js", "js/popup.js", "js/background.js"],
+    "page": "background.html",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://weather.timleland.com 'unsafe-eval'; object-src 'self'",
   "browser_action" : {
 	"default_icon": { "38": "img/icon38.png" },
     "default_title": "Weather",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+
   "manifest_version": 2,
   "permissions": [ "alarms", "storage", "geolocation", "*://*.timleland.com/*", "notifications"]
 
