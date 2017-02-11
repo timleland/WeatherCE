@@ -1,6 +1,6 @@
 {
   "name": "Weather",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "The best way to see the weather right in your browser. Easier than looking outside!",
 
   "icons": {
@@ -11,7 +11,7 @@
     "page": "background.html",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://weather.timleland.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action" : {
 	"default_icon": { "38": "img/icon38.png" },
     "default_title": "Weather",
@@ -19,6 +19,6 @@
   },
 
   "manifest_version": 2,
-  "permissions": [ "alarms", "storage", "geolocation", "*://*.weather.timleland.com/*", "notifications"]
+  "permissions": [ "alarms", "storage", "geolocation", "*://*.timleland.com/*", "notifications"]
 
 }
