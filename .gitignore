@@ -2,3 +2,5 @@ config/*
 .DS_Store
 app.nex
 app.pem
+node_modules
+build
