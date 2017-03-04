@@ -1,6 +1,6 @@
 [![Project Sponsored By ReactForBeginners.com](https://img.shields.io/badge/👍_Project_Sponsored_By-ReactForBeginners.com Tutorials-brightgreen.svg?style=flat-square)](https://ReactForBeginners.com/friend/TIM)
 ####Weather Extension (Chrome & Opera)
-The Best Weather extension using [Dark Sky's API](https://darksky.net/dev/)
+The Best Weather extension using Dark Sky's API
 
 **To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb)
 | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-extension/)
