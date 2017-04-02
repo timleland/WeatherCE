@@ -1,4 +1,5 @@
-####Weather Extension
+Weather Extension
+===========
 The Best [Weather Extension](http://weatherextension.com) using Dark Sky's API
 
 **To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb)
