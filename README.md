@@ -1,4 +1,3 @@
-[![Project Sponsored By ReactForBeginners.com](https://img.shields.io/badge/👍_Project_Sponsored_By-ReactForBeginners.com Tutorials-brightgreen.svg?style=flat-square)](https://ReactForBeginners.com/friend/TIM)
 ####Weather Extension
 The Best [Weather Extension](http://weatherextension.com) using Dark Sky's API
 
