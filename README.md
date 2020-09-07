@@ -4,7 +4,8 @@ The Best [Weather Extension](http://weatherextension.com) using Dark Sky's API
 
 **To Install:** [Chrome](https://chrome.google.com/webstore/detail/weather/iolcbmjhmpdheggkocibajddahbeiglb)
 | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/weather-extension/)
-| [Opera](https://addons.opera.com/en/extensions/details/weather-2/?display=en)
+| [Opera](https://addons.opera.com/en/extensions/details/weather-2/)
+| [Edge](https://microsoftedge.microsoft.com/addons/detail/weather/pkmfjimjjadfenfcgabnimfkhfpnjjni)
 
 *Automatically locates and displays your current weather, hourly and 5 day forecast. The app icon will automatically update to your current temperature. Very easy to use!*
 
