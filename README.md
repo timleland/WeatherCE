@@ -17,4 +17,4 @@ The Best [Weather Extension](http://weatherextension.com) using Dark Sky's API
 
 **Blog Post:** [TimLeland.com/weather-chrome-extension](http://timleland.com/weather-chrome-extension/)
 
-![Screenshot](https://github.com/timleland/WeatherCE/raw/master/media/Weather%204.0%20Screenshots/1.png)
+![Screenshot](https://raw.githubusercontent.com/timleland/WeatherCE/master/media/Weather%205.0%20Screenshots/screenshot-1.jpeg)
