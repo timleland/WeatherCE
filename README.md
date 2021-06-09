@@ -18,6 +18,6 @@ The Best [Weather Extension](http://weatherextension.com) using Dark Sky's API
 
 **Blog Post:** [TimLeland.com/weather-chrome-extension](http://timleland.com/weather-chrome-extension/)
 
-![Screenshot](https://raw.githubusercontent.com/timleland/WeatherCE/master/media/Weather%205.0%20Screenshots/screenshot-1.jpeg)
-
 <a href="https://www.digitalocean.com/?refcode=95e54284e826&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
+
+![Screenshot](https://raw.githubusercontent.com/timleland/WeatherCE/master/media/Weather%205.0%20Screenshots/screenshot-1.jpeg)
